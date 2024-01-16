@@ -2,7 +2,7 @@ import viteLogo from '/vite.svg';
 import './App.css';
 import EHeader from './Elements/EHeader';
 import FCStudent from './FuncComps/FCStudent';
-import CCCar from './FuncComps/ClassComps/CCCar';
+import CCCar from './ClassComps/CCCar';
 
 function App() {
   return (
