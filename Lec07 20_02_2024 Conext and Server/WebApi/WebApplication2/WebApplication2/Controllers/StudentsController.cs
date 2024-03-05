@@ -72,6 +72,61 @@ namespace WebApplication2.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult Put(int id, [FromBody] Student student)
+        {
+            try
+            {
+                if (student == null || id != student.Id)
+                {
+                    return BadRequest();
+                }
+                
+                Student stu2Update = StudentsDBMock.students.FirstOrDefault(stu => stu.Id == id);
+                if (stu2Update == null)
+                {
+                    return NotFound($"studnet with id = {id} was not found in the PUT action!!!");
+                }
+                stu2Update.Name = student.Name;
+                stu2Update.Grade  = student.Grade;
+                return NoContent();                
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                if (id == 0)
+                {
+                    return BadRequest();
+                }
+
+                Student stu2Del = StudentsDBMock.students.FirstOrDefault(stu => stu.Id == id);
+                if (stu2Del == null)
+                {
+                    return NotFound($"studnet with id = {id} was not found in the Deltete action!!!");
+                }
+                StudentsDBMock.students.Remove(stu2Del);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
 
     }
 }
